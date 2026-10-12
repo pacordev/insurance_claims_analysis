@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ins_claims
+    ports:
+      - "5433:5432"  # 5432 is taken by another local project's Postgres
+    volumes:
+      - ins_claims_pgdata:/var/lib/postgresql/data
+      # schema gets applied automatically the first time the container starts
+      - ./data/database/claims_schema_tables_v3.sql:/docker-entrypoint-initdb.d/01_schema.sql
+
+volumes:
+  ins_claims_pgdata:

@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.DS_Store
+
+# generated synthetic data - reproducible via data/datasets/claims_data_generator_v2.py
+data/datasets/*.csv
+
+# generated Excel reports
+summary_reports/
+
+# private project notes - not for the public repo (the rest of docs/ stays tracked)
+docs/claims_plat_planning.md
+docs/basic_requirement.txt
