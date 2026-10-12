@@ -2,7 +2,7 @@
 The actual ingestion pipeline: CSV -> validate -> light transform -> load
 into Postgres. This is the "Python ingestion / Data validation / Pandas
 transformation / PostgreSQL" chunk of the pipeline diagram in
-docs/basic_requirement.txt.
+the README.
 
 Run it end to end with:
     python -m data.pipeline.cli --data-dir data/datasets

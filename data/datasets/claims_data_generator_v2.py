@@ -3,7 +3,7 @@ Synthetic data generator - v2
 
 Generates fake but structurally realistic rows for all 8 tables (6 data tables +
 2 lookup tables) in
-data/database/claims_schema_tables_v3.sql, sized per docs/claims_plat_planning.md:
+data/database/claims_schema_tables_v3.sql, sized to give enough volume for monthly trends and per-product comparisons:
 
     20,000 customers
     60 adjudicators
@@ -30,7 +30,7 @@ import pandas as pd
 from faker import Faker
 
 # -------------------------
-# Config - matches the volumes agreed in docs/claims_plat_planning.md
+# Config - volumes chosen to give enough data for monthly trends and per-product comparisons
 # -------------------------
 N_CUSTOMERS = 20_000
 N_ADJUDICATORS = 60

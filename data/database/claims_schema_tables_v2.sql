@@ -1,12 +1,12 @@
 -- =====================================================================
 -- Insurance Claims Analytics Platform - Schema v2
 -- Builds on database/claims_schema_tables.sql (kept as-is for reference).
--- Changes vs v1, per docs/claims_plat_planning.md:
+-- Changes vs v1:
 --   - fraud fields + extra dates on claims (needed for fraud/processing-time metrics)
 --   - adjudicators.workload_score renamed to capacity_score (it's a target/baseline,
 --     real workload gets computed from the claims table in the analytics layer)
 --   - CHECK constraints on status/type/enum-ish columns (chose this over Ref_* lookup
---     tables to keep things lean - see planning doc for the reasoning)
+--     tables to keep things lean)
 --   - sanity CHECKs on money columns and date ordering
 --   - indexes on FK / commonly-filtered columns
 --   - updated_at columns + trigger, since claims/policies change status over time

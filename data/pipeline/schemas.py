@@ -1,6 +1,6 @@
 """
 Pandera schemas - this is the "data validation" step from the pipeline
-diagram in docs/basic_requirement.txt. Each schema mirrors the CHECK constraints
+diagram in the README. Each schema mirrors the CHECK constraints
 already in data/database/claims_schema_tables_v3.sql, so bad rows get caught here
 with a readable pandas error instead of a cryptic Postgres constraint error.
 

@@ -15,7 +15,7 @@ app/
   analytics/              queries, one module per metric group
   reports/                collect_claims_data.py, gen_excel_report.py
 summary_reports/          generated workbooks (git-ignored)
-docs/                     this file (tracked); the planning doc and original requirements live here too but are git-ignored
+docs/                     this file, the report screenshots and the interactive platform diagram
 tests/
 docker-compose.yml        local Postgres 16
 requirements.txt          pinned dependencies

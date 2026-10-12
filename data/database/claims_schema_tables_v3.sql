@@ -17,12 +17,12 @@
 --       claim_date falls inside the policy's term (start and end days included)
 --     one trigger on claims, one on policies (so editing a policy can't strand its claims)
 --
--- Changes in v2 vs v1, per docs/claims_plat_planning.md:
+-- Changes in v2 vs v1:
 --   - fraud fields + extra dates on claims (needed for fraud/processing-time metrics)
 --   - adjudicators.workload_score renamed to capacity_score (it's a target/baseline,
 --     real workload gets computed from the claims table in the analytics layer)
 --   - CHECK constraints on status/type/enum-ish columns (chose this over Ref_* lookup
---     tables to keep things lean - see planning doc for the reasoning)
+--     tables to keep things lean; v3 later moved the product-related ones into lookup tables)
 --   - sanity CHECKs on money columns and date ordering
 --   - indexes on FK / commonly-filtered columns
 --   - updated_at columns + trigger, since claims/policies change status over time
