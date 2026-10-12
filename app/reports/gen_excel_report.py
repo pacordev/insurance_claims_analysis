@@ -580,7 +580,15 @@ def write_workbook(frames: Frames, output: Path, filters: Filters | None = None,
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
 
-    wb = xlsxwriter.Workbook(str(output), {"nan_inf_to_errors": False})
+    # data values (product names, provinces, adjudicator names...) can come from anyone's CSV.
+    # by default xlsxwriter turns text that starts with "=" into a live formula and text that
+    # looks like a URL into a clickable link, so a cell like =HYPERLINK(...) would run when the
+    # report is opened. switch both off: every value we write stays plain text.
+    wb = xlsxwriter.Workbook(str(output), {
+        "nan_inf_to_errors": False,
+        "strings_to_formulas": False,
+        "strings_to_urls": False,
+    })
     wb.set_properties({"title": "Insurance Claims Analytics Report", "comments": "Synthetic data"})
     for name in SHEET_NAMES:  # create tabs in order first, fill them in whatever order is handy
         wb.add_worksheet(name)

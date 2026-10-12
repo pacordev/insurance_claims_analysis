@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
-from sqlalchemy import Engine
+from sqlalchemy import Engine, text
 
 from app.analytics.common import Filters
 from app.reports import gen_excel_report as excel
@@ -157,3 +157,29 @@ def test_product_colors_never_invent_colors() -> None:
     assert colors["Other"] == excel.OTHER_GREY
     assert colors["Pet"] != colors["Boat"]
     assert {colors["Pet"], colors["Boat"]} <= set(excel.SLOTS)
+
+
+# ---------- text from the data must never turn into formulas or links ----------
+
+
+def _sheet_xml(path: Path) -> dict[str, str]:
+    with zipfile.ZipFile(path) as z:
+        return {n: z.read(n).decode() for n in z.namelist() if n.startswith("xl/worksheets/sheet")}
+
+
+def test_hostile_text_stays_plain_text(engine: Engine, tmp_path: Path) -> None:
+    """a CSV value like =HYPERLINK(...) or a bare URL must be written as text, not as a formula or link"""
+    formula = '=HYPERLINK("http://evil.example/x","Click to verify")'
+    with engine.begin() as conn:
+        conn.execute(text("UPDATE customers SET province = :v WHERE customer_id = 1"), {"v": formula})
+        conn.execute(text("UPDATE customers SET city = 'http://phish.example/login' WHERE customer_id = 2"))
+        conn.execute(text("UPDATE adjudicators SET first_name = '=1+1' WHERE adjudicator_id = 1"))
+
+    out = excel.build_report(engine, tmp_path / "hostile.xlsx")
+
+    for name, xml in _sheet_xml(out).items():
+        assert "<f>" not in xml, f"{name} contains a formula"
+        assert "<hyperlink" not in xml, f"{name} contains a hyperlink"
+    strings = shared_strings(out)
+    assert "HYPERLINK" in html.unescape(strings)  # the text itself is still shown, just inert
+    assert "http://phish.example/login" in strings
