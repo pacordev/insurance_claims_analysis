@@ -28,8 +28,7 @@ generate data  ->  validate  ->  load into PostgreSQL  ->  analytics queries  ->
 
 <img src="docs/overview.png" alt="Diagram of how the platform works: CSV files or the sample generator feed validation and loading, which writes to the database or stops with a readable error; the analytics read the database and produce the Excel report or tables for Python" width="900">
 
-*How the platform fits together.* [Open the interactive version](docs/platform_overview.html) (pan, zoom, search, light and dark themes).
-<!-- TODO: replace the link above with the hosted URL of docs/platform_overview.html once the repo is published -->
+*How the platform fits together.* [Open the interactive version](https://pacordev.github.io/insurance_claims_analysis/docs/platform_overview.html) (pan, zoom, search, light and dark themes).
 
 The project is split in two on purpose:
 
